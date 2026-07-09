@@ -1,6 +1,8 @@
 package com.tecnoFibras.tecnoFibras.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -8,24 +10,23 @@ import lombok.Data;
 @Entity
 @Table(name = "detalle_cotizacion")
 public class DetalleCotizacion implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "id_detalle")
+    private Integer idDetalle;
 
-    @ManyToOne
-    @JoinColumn(name = "cotizacion_id", nullable = false)
-    private Cotizacion cotizacion;
+    @NotNull(message = "El ID de la cotización es obligatorio.")
+    @Column(name = "id_cotizacion")
+    private Integer idCotizacion;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id", nullable = false)
-    private Producto producto;
+    @NotNull(message = "El ID del producto es obligatorio.")
+    @Column(name = "id_producto")
+    private Integer idProducto;
 
-    @Column(name = "cantidad")
+    @NotNull(message = "La cantidad no puede estar vacía.")
+    @Min(value = 1, message = "La cantidad mínima debe ser 1.")
     private Integer cantidad;
-
-    @Column(name = "observaciones", length = 300)
-    private String observaciones;
 }
