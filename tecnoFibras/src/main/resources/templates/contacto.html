@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head}">
+        <title>TecnoFibras - Contacto</title>
+    </head>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="card shadow">
+                        <div class="card-header bg-dark text-white">
+                            <h4><i class="fas fa-envelope"></i> Contacto</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" th:action="@{/contacto}">
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control"
+                                           placeholder="Tu nombre completo" required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control"
+                                           placeholder="correo@ejemplo.com" required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Mensaje</label>
+                                    <textarea class="form-control" rows="4"
+                                              placeholder="Escribe tu mensaje aquí..." required></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-dark">
+                                        <i class="fas fa-paper-plane"></i> Enviar mensaje
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mt-4">
+                        <div class="card-header bg-dark text-white">
+                            <h4><i class="fas fa-map-marker-alt"></i> Información de contacto</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><i class="fas fa-map-marker-alt"></i>
+                                <strong> Dirección:</strong> Naranjo, Alajuela, Costa Rica</p>
+                            <p><i class="fas fa-phone"></i>
+                                <strong> Teléfono:</strong> 2451-0000</p>
+                            <p><i class="fas fa-envelope"></i>
+                                <strong> Correo:</strong> info@tecnofibrastfcr.com</p>
+                            <p><i class="fas fa-clock"></i>
+                                <strong> Horario:</strong> Lunes a Viernes 8:00 am - 5:00 pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section th:replace="~{general/fragmentos :: mostrarToast}"/>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>
