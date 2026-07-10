@@ -26,16 +26,6 @@ public class CotizacionService {
         return cotizacionRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Cotizacion> getCotizacionesByUsuario(Integer usuarioId) {
-        return cotizacionRepository.findByUsuarioId(usuarioId);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Cotizacion> getCotizacionesByVendedor(Integer vendedorId) {
-        return cotizacionRepository.findByVendedorId(vendedorId);
-    }
-
     @Transactional
     public void save(Cotizacion cotizacion) {
         cotizacionRepository.save(cotizacion);
