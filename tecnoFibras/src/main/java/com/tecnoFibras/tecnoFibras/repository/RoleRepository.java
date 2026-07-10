@@ -1,38 +1,13 @@
-package com.tecnoFibras.tecnoFibras.service;
+package com.tecnoFibras.tecnoFibras.repository;
 
 import com.tecnoFibras.tecnoFibras.domain.role;
-import com.tecnoFibras.tecnoFibras.repository.RoleRepository;
 import java.util.List;
-import java.util.Optional;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@Service
-public class RoleService {
-
-    private final RoleRepository roleRepository;
-
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
-    @Transactional(readOnly = true)
-    public List<role> getRoles() {
-        return roleRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<role> getRole(Integer id) {
-        return roleRepository.findById(id);
-    }
-
-    @Transactional
-    public void save(role role) {
-        roleRepository.save(role);
-    }
-
-    @Transactional
-    public void delete(Integer id) {
-        roleRepository.deleteById(id);
-    }
+@Repository
+public interface RoleRepository extends JpaRepository<role, Integer> {
+    
+    // Permite encontrar todos los roles asignados a un usuario específico (Cliente, Vendedor, Admin)
+    List<role> findByIdUsuario(Integer idUsuario);
 }
