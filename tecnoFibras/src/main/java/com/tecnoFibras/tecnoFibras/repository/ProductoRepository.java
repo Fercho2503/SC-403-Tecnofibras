@@ -1,14 +1,44 @@
-package com.tecnoFibras.tecnoFibras.repository;
+package com.tecnoFibras.tecnoFibras.service;
 
 import com.tecnoFibras.tecnoFibras.domain.Producto;
+import com.tecnoFibras.tecnoFibras.repository.ProductoRepository;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+@Service
+public class ProductoService {
 
-    List<Producto> findByActivoTrue();
+    private final ProductoRepository productoRepository;
 
-    List<Producto> findByCategoriaId(Integer categoriaId);
+    // Inyección por constructor limpia
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Producto> getProductos() {
+        return productoRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Producto> getProducto(Integer id) {
+        return productoRepository.findById(id);
+    }
+
+    @Transactional
+    public void save(Producto producto) {
+        productoRepository.save(producto);
+    }
+
+    @Transactional
+    public void delete(Integer id) {
+        productoRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Producto> getProductosPorCategoria(Integer idCategoria) {
+        return productoRepository.findByIdCategoria(idCategoria);
+    }
 }
