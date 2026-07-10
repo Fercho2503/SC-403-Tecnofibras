@@ -1,44 +1,17 @@
-package com.tecnoFibras.tecnoFibras.service;
-
-import com.tecnoFibras.tecnoFibras.domain.Producto;
-import com.tecnoFibras.tecnoFibras.repository.ProductoRepository;
+import com.tiendaTech.tienda.domain.Producto;
 import java.util.List;
-import java.util.Optional;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@Service
-public class ProductoService {
+@Repository
+public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     
-    private final ProductoRepository productoRepository;
-
-    // Inyección por constructor limpia
-    public ProductoService(ProductoRepository productoRepository) {
-        this.productoRepository = productoRepository;
-    }
-
-    @Transactional(readOnly = true)
-    public List<Producto> getProductos() {
-        return productoRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<Producto> getProducto(Integer id) {
-        return productoRepository.findById(id);
-    }
-
-    @Transactional
-    public void save(Producto producto) {
-        productoRepository.save(producto);
-    }
-
-    @Transactional
-    public void delete(Integer id) {
-        productoRepository.deleteById(id);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Producto> getProductosPorCategoria(Integer idCategoria) {
-        return productoRepository.findByIdCategoria(idCategoria);
-    }
+    // Para mostrar solo los productos activos en la tienda
+    List<Producto> findByActivoTrue();
+    
+    // Súper útil para filtrar el catálogo: Bañeras, Pilas o Bases de ducha
+    List<Producto> findByIdCategoria(Integer idCategoria);
+    
+    // Combina ambos filtros: productos activos de una categoría específica
+    List<Producto> findByIdCategoriaAndActivoTrue(Integer idCategoria);
 }
