@@ -28,12 +28,12 @@ public class CotizacionService {
 
     @Transactional(readOnly = true)
     public List<Cotizacion> getCotizacionesByUsuario(Integer usuarioId) {
-        return cotizacionRepository.findByUsuarioId(usuarioId);
+        return cotizacionRepository.findByUsuario_IdUsuario(usuarioId);
     }
 
     @Transactional(readOnly = true)
     public List<Cotizacion> getCotizacionesByVendedor(Integer vendedorId) {
-        return cotizacionRepository.findByVendedorId(vendedorId);
+        return cotizacionRepository.findByVendedor_IdUsuario(vendedorId);
     }
 
     @Transactional

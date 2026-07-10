@@ -14,18 +14,19 @@ import lombok.Data;
 public class Cotizacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cotizacion")
     private Integer idCotizacion;
 
-    @NotNull(message = "El ID del cliente es obligatorio.")
-    @Column(name = "id_cliente")
-    private Integer idCliente;
+    @NotNull(message = "El cliente es obligatorio.")
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Usuario usuario;
 
-    @Column(name = "id_vendedor")
-    private Integer idVendedor;
+    @ManyToOne
+    @JoinColumn(name = "id_vendedor")
+    private Usuario vendedor;
 
     private LocalDateTime fecha;
 

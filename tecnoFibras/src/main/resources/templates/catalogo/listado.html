@@ -6,22 +6,21 @@
     </head>
     <body>
         <header th:replace="~{general/fragmentos :: header}"/>
-
         <div class="container py-4">
             <!-- Filtros por categoría -->
             <div class="row mb-4">
                 <div class="col text-center">
-                    <a th:href="@{/catalogo}" class="btn btn-danger me-2">
+                    <a th:href="@{/catalogo}"
+                       th:class="${categoriaSeleccionada == 0} ? 'btn btn-danger me-2' : 'btn btn-outline-danger me-2'">
                         <i class="fas fa-th"></i> Todos
                     </a>
                     <a th:each="c : ${categorias}"
-                       th:href="@{/catalogo/categoria/}+${c.id}"
-                       class="btn btn-outline-danger me-2">
-                        [[${c.nombre}]]
+                       th:href="@{/catalogo/categoria/}+${c.idCategoria}"
+                       th:class="${categoriaSeleccionada == c.idCategoria} ? 'btn btn-danger me-2' : 'btn btn-outline-danger me-2'">
+                        [[${c.descripcion}]]
                     </a>
                 </div>
             </div>
-
             <!-- Listado de productos -->
             <div class="row g-4" th:if="${productos != null and !productos.empty}">
                 <div class="col-md-3" th:each="p : ${productos}">
@@ -29,13 +28,12 @@
                         <img th:src="${p.rutaImagen != null and !#strings.isEmpty(p.rutaImagen)} ? ${p.rutaImagen} : 'https://via.placeholder.com/300x200?text=Sin+imagen'"
                              class="card-img-top" alt="imagen producto" style="height: 200px; object-fit: cover;"/>
                         <div class="card-body">
-                            <h5 class="card-title">[[${p.nombre}]]</h5>
-                            <p class="card-text text-muted small">[[${p.descripcion}]]</p>
+                            <h5 class="card-title">[[${p.descripcion}]]</h5>
                             <p class="fw-bold text-danger">₡ [[${p.precio}]]</p>
-                            <span class="badge bg-secondary">[[${p.categoria.nombre}]]</span>
+                            <span class="badge bg-secondary">[[${p.categoria.descripcion}]]</span>
                         </div>
                         <div class="card-footer">
-                            <a th:href="@{/catalogo/producto/}+${p.id}"
+                            <a th:href="@{/catalogo/producto/}+${p.idProducto}"
                                class="btn btn-danger btn-sm w-100">
                                 <i class="fas fa-eye"></i> Ver detalle
                             </a>
@@ -43,13 +41,11 @@
                     </div>
                 </div>
             </div>
-
             <div th:if="${productos == null or productos.empty}" class="text-center py-5">
                 <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
                 <p class="text-muted">No hay productos disponibles.</p>
             </div>
         </div>
-
         <footer th:replace="~{general/fragmentos :: footer}"/>
     </body>
 </html>
