@@ -35,4 +35,14 @@ public class CatalogoController {
         model.addAttribute("categoriaSeleccionada", id);
         return "catalogo/listado";
     }
+
+    @GetMapping("/producto/{id}")
+    public String detalle(@PathVariable Integer id, Model model) {
+        var productoOpt = productoService.getProducto(id);
+        if (productoOpt.isEmpty()) {
+            return "redirect:/catalogo";
+        }
+        model.addAttribute("producto", productoOpt.get());
+        return "catalogo/detalle";
+    }
 }

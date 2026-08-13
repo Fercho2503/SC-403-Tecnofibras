@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head}">
+        <title>TecnoFibras - Detalle</title>
+    </head>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+
+        <div class="container py-4">
+            <a th:href="@{/catalogo}" class="btn btn-outline-danger mb-3">
+                <i class="fas fa-arrow-left"></i> Volver al catálogo
+            </a>
+            <div class="row">
+                <div class="col-md-5">
+                    <img th:src="${producto.rutaImagen != null and !#strings.isEmpty(producto.rutaImagen)} ? ${producto.rutaImagen} : 'https://via.placeholder.com/500x400?text=Sin+imagen'"
+                         class="img-fluid rounded shadow-sm" alt="imagen producto"/>
+                </div>
+                <div class="col-md-7">
+                    <h2>[[${producto.descripcion}]]</h2>
+                    <span class="badge bg-secondary mb-3">[[${producto.categoria.descripcion}]]</span>
+                    <p class="fs-3 text-danger fw-bold">₡ [[${producto.precio}]]</p>
+                    <ul class="list-group">
+                        <li class="list-group-item" th:if="${producto.medidas != null}">
+                            <strong>Medidas:</strong> [[${producto.medidas}]]
+                        </li>
+                        <li class="list-group-item" th:if="${producto.galonaje != null}">
+                            <strong>Galonaje:</strong> [[${producto.galonaje}]]
+                        </li>
+                        <li class="list-group-item" th:if="${producto.capacidad != null}">
+                            <strong>Capacidad:</strong> [[${producto.capacidad}]]
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>

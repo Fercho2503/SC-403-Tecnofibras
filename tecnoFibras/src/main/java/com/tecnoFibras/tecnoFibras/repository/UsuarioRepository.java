@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-   // Este método es obligatorio y vital para cuando configures Spring Security (Login)
+
     Optional<Usuario> findByUsername(String username);
-    
-    // Para validar si un correo ya está registrado
+
     Optional<Usuario> findByCorreo(String correo);
+
+    Optional<Usuario> findByTokenActivacion(String token);
 }

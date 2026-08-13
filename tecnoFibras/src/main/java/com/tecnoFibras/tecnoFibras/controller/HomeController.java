@@ -13,6 +13,16 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/acceso_denegado")
+    public String accesoDenegado() {
+        return "denegado";
+    }
+
     @GetMapping("/contacto")
     public String contacto() {
         return "contacto";

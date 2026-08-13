@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head}">
+        <title>TecnoFibras - Modificar Usuario</title>
+    </head>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+
+        <div class="container mt-4" style="max-width: 600px;">
+            <form th:action="@{/usuario/guardar}" th:object="${usuario}" method="post">
+                <input type="hidden" name="idUsuario" th:field="*{idUsuario}"/>
+
+                <div class="row py-3 mb-3 bg-light">
+                    <div class="col-md-6 d-grid">
+                        <a th:href="@{/usuario/listado}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Regresar
+                        </a>
+                    </div>
+                    <div class="col-md-6 d-grid">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h4>Editar Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Usuario</label>
+                            <input type="text" name="username" class="form-control" th:field="*{username}" maxlength="30" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña (dejar en blanco para no cambiarla)</label>
+                            <input type="password" name="password" class="form-control" maxlength="100"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" th:field="*{nombre}" maxlength="30" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Apellidos</label>
+                            <input type="text" name="apellidos" class="form-control" th:field="*{apellidos}" maxlength="60" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Correo</label>
+                            <input type="email" name="correo" class="form-control" th:field="*{correo}" maxlength="50"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" name="telefono" class="form-control" th:field="*{telefono}" maxlength="25"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Rol</label>
+                            <select name="nombreRol" class="form-select" required>
+                                <option th:each="r : ${rolesDisponibles}"
+                                        th:value="${r}" th:text="${r}"
+                                        th:selected="${r == rolActual}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="activo" class="form-check-input" th:field="*{activo}"/>
+                            <label class="form-check-label">Activo</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <section th:replace="~{general/fragmentos :: mostrarToast}"/>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>

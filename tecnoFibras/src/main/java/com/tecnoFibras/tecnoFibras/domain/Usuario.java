@@ -51,5 +51,8 @@ public class Usuario implements Serializable {
     @Column(name = "ruta_imagen", length = 1024)
     private String rutaImagen;
 
+    @Column(name = "token_activacion", length = 100)
+    private String tokenActivacion;
+    
     private Boolean activo;
 }
