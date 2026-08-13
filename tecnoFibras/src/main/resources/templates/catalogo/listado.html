@@ -8,17 +8,48 @@
         <header th:replace="~{general/fragmentos :: header}"/>
         <div class="container py-4">
             <!-- Filtros por categoría -->
-            <div class="row mb-4">
+            <div class="row mb-3">
                 <div class="col text-center">
-                    <a th:href="@{/catalogo}"
+                    <a th:href="@{/catalogo(precioMin=${precioMin}, precioMax=${precioMax})}"
                        th:class="${categoriaSeleccionada == 0} ? 'btn btn-danger me-2' : 'btn btn-outline-danger me-2'">
                         <i class="fas fa-th"></i> Todos
                     </a>
                     <a th:each="c : ${categorias}"
-                       th:href="@{/catalogo/categoria/}+${c.idCategoria}"
+                       th:href="@{/catalogo(categoriaId=${c.idCategoria}, precioMin=${precioMin}, precioMax=${precioMax})}"
                        th:class="${categoriaSeleccionada == c.idCategoria} ? 'btn btn-danger me-2' : 'btn btn-outline-danger me-2'">
                         [[${c.descripcion}]]
                     </a>
+                </div>
+            </div>
+
+            <!-- Filtro por rango de precio -->
+            <div class="row mb-4">
+                <div class="col">
+                    <form th:action="@{/catalogo}" method="get" class="row g-2 justify-content-center align-items-end">
+                        <input type="hidden" name="categoriaId"
+                               th:value="${categoriaSeleccionada != 0} ? ${categoriaSeleccionada} : null"/>
+                        <div class="col-auto">
+                            <label class="form-label mb-0">Precio mínimo</label>
+                            <input type="number" step="0.01" min="0" name="precioMin" class="form-control"
+                                   th:value="${precioMin}" placeholder="₡ 0"/>
+                        </div>
+                        <div class="col-auto">
+                            <label class="form-label mb-0">Precio máximo</label>
+                            <input type="number" step="0.01" min="0" name="precioMax" class="form-control"
+                                   th:value="${precioMax}" placeholder="₡ 999999"/>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                        </div>
+                        <div class="col-auto" th:if="${precioMin != null or precioMax != null}">
+                            <a th:href="@{/catalogo(categoriaId=${categoriaSeleccionada != 0} ? ${categoriaSeleccionada} : null)}"
+                               class="btn btn-outline-secondary">
+                                <i class="fas fa-times"></i> Quitar filtro de precio
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- Listado de productos -->
