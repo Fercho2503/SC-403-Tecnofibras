@@ -18,7 +18,20 @@
                 <div class="col-md-7">
                     <h2>[[${producto.descripcion}]]</h2>
                     <span class="badge bg-secondary mb-3">[[${producto.categoria.descripcion}]]</span>
-                    <p class="fs-3 text-danger fw-bold">₡ [[${producto.precio}]]</p>
+
+                    <div th:if="${descuentos.containsKey(producto.idProducto)}">
+                        <span class="badge bg-danger fs-6 mb-2"
+                              th:text="'-' + ${descuentos.get(producto.idProducto)} + '% de descuento'"></span>
+                        <p class="mb-0">
+                            <span class="text-decoration-line-through text-muted fs-5">₡ [[${producto.precio}]]</span>
+                        </p>
+                        <p class="fs-3 text-danger fw-bold"
+                           th:text="'₡ ' + ${#numbers.formatDecimal(producto.precio * (1 - descuentos.get(producto.idProducto) / 100), 1, 2)}"></p>
+                    </div>
+                    <p class="fs-3 text-danger fw-bold" th:unless="${descuentos.containsKey(producto.idProducto)}">
+                        ₡ [[${producto.precio}]]
+                    </p>
+
                     <ul class="list-group">
                         <li class="list-group-item" th:if="${producto.medidas != null}">
                             <strong>Medidas:</strong> [[${producto.medidas}]]

@@ -56,11 +56,23 @@
             <div class="row g-4" th:if="${productos != null and !productos.empty}">
                 <div class="col-md-3" th:each="p : ${productos}">
                     <div class="card h-100 shadow-sm">
+                        <span th:if="${descuentos.containsKey(p.idProducto)}"
+                              class="badge bg-danger position-absolute m-2"
+                              th:text="'-' + ${descuentos.get(p.idProducto)} + '%'"></span>
                         <img th:src="${p.rutaImagen != null and !#strings.isEmpty(p.rutaImagen)} ? ${p.rutaImagen} : 'https://via.placeholder.com/300x200?text=Sin+imagen'"
                              class="card-img-top" alt="imagen producto" style="height: 200px; object-fit: cover;"/>
                         <div class="card-body">
                             <h5 class="card-title">[[${p.descripcion}]]</h5>
-                            <p class="fw-bold text-danger">₡ [[${p.precio}]]</p>
+                            <div th:if="${descuentos.containsKey(p.idProducto)}">
+                                <p class="mb-0">
+                                    <span class="text-decoration-line-through text-muted">₡ [[${p.precio}]]</span>
+                                </p>
+                                <p class="fw-bold text-danger fs-5"
+                                   th:text="'₡ ' + ${#numbers.formatDecimal(p.precio * (1 - descuentos.get(p.idProducto) / 100), 1, 2)}"></p>
+                            </div>
+                            <p class="fw-bold text-danger" th:unless="${descuentos.containsKey(p.idProducto)}">
+                                ₡ [[${p.precio}]]
+                            </p>
                             <span class="badge bg-secondary">[[${p.categoria.descripcion}]]</span>
                         </div>
                         <div class="card-footer">

@@ -1,9 +1,8 @@
 package com.tecnoFibras.tecnoFibras.controller;
 
-import com.tecnoFibras.tecnoFibras.domain.Producto;
 import com.tecnoFibras.tecnoFibras.service.CategoriaService;
 import com.tecnoFibras.tecnoFibras.service.ProductoService;
-import java.util.Optional;
+import com.tecnoFibras.tecnoFibras.service.PromocionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +17,12 @@ public class CatalogoController {
 
     private final ProductoService productoService;
     private final CategoriaService categoriaService;
+    private final PromocionService promocionService;
 
-    public CatalogoController(ProductoService productoService, CategoriaService categoriaService) {
+    public CatalogoController(ProductoService productoService, CategoriaService categoriaService, PromocionService promocionService) {
         this.productoService = productoService;
         this.categoriaService = categoriaService;
+        this.promocionService = promocionService;
     }
 
     @GetMapping
@@ -34,27 +35,19 @@ public class CatalogoController {
         model.addAttribute("categoriaSeleccionada", categoriaId != null ? categoriaId : 0);
         model.addAttribute("precioMin", precioMin);
         model.addAttribute("precioMax", precioMax);
+        model.addAttribute("descuentos", promocionService.getMejoresDescuentosPorProducto());
         return "catalogo/listado";
     }
-    
+
     @GetMapping("/producto/{id}")
     public String detalle(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
-        Optional<Producto> productoOpt = productoService.getProducto(id);
+        var productoOpt = productoService.getProducto(id);
         if (productoOpt.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "El producto no existe.");
             return "redirect:/catalogo";
         }
         model.addAttribute("producto", productoOpt.get());
-        return "catalogo/detalle";
-    }
-
-    @GetMapping("/producto/{id}")
-    public String detalle(@PathVariable Integer id, Model model) {
-        var productoOpt = productoService.getProducto(id);
-        if (productoOpt.isEmpty()) {
-            return "redirect:/catalogo";
-        }
-        model.addAttribute("producto", productoOpt.get());
+        model.addAttribute("descuentos", promocionService.getMejoresDescuentosPorProducto());
         return "catalogo/detalle";
     }
 }
