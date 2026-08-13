@@ -40,4 +40,9 @@ public class ProductoService {
     public void delete(Integer id) {
         productoRepository.deleteById(id);
     }
+    
+    @Transactional(readOnly = true)
+    public List<Producto> getProductosFiltrados(Integer categoriaId, Double precioMin, Double precioMax) {
+        return productoRepository.findByFiltros(categoriaId, precioMin, precioMax);
+    }
 }

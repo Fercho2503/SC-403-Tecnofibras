@@ -5,7 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -28,4 +32,16 @@ public class Promocion implements Serializable {
     private Double descuento;
 
     private Boolean activo;
+
+    // Relación muchos-a-muchos: una promoción aplica a varios productos
+    // y un producto puede estar en varias promociones.
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "producto_promocion",
+            joinColumns = @JoinColumn(name = "id_promocion"),
+            inverseJoinColumns = @JoinColumn(name = "id_producto")
+    )
+    private List<Producto> productos = new ArrayList<>();
 }
