@@ -48,13 +48,4 @@ public class CatalogoController {
         return "catalogo/detalle";
     }
 
-    @GetMapping("/producto/{id}")
-    public String detalle(@PathVariable Integer id, Model model) {
-        var productoOpt = productoService.getProducto(id);
-        if (productoOpt.isEmpty()) {
-            return "redirect:/catalogo";
-        }
-        model.addAttribute("producto", productoOpt.get());
-        return "catalogo/detalle";
-    }
 }
