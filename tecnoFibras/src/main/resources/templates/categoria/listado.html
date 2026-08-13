@@ -40,17 +40,17 @@
                                     </thead>
                                     <tbody>
                                         <tr th:each="c : ${categorias}">
-                                            <td>[[${c.id}]]</td>
-                                            <td>[[${c.nombre}]]</td>
+                                            <td>[[${c.idCategoria}]]</td>
+                                            <td>[[${c.descripcion}]]</td>
                                             <td th:text="${c.activo} ? 'Sí' : 'No'"></td>
                                             <td>
-                                                <a th:href="@{/categoria/modificar/}+${c.id}"
+                                                <a th:href="@{/categoria/modificar/}+${c.idCategoria}"
                                                    class="btn btn-warning btn-sm">
                                                     <i class="fas fa-pencil-alt"></i> Editar
                                                 </a>
                                                 <form th:action="@{/categoria/eliminar}" method="post"
                                                       style="display:inline">
-                                                    <input type="hidden" name="id" th:value="${c.id}"/>
+                                                    <input type="hidden" name="id" th:value="${c.idCategoria}"/>
                                                     <button type="submit" class="btn btn-danger btn-sm"
                                                             onclick="return confirm('¿Eliminar esta categoría?')">
                                                         <i class="fas fa-trash"></i> Eliminar
@@ -89,8 +89,8 @@
                     <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="post">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" required/>
+                                <label class="form-label">Descripción</label>
+                                <input type="text" name="descripcion" class="form-control" required/>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Activo</label>

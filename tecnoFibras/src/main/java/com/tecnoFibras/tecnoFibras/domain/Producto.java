@@ -20,8 +20,9 @@ public class Producto implements Serializable {
     private Integer idProducto;
 
     @NotNull(message = "La categoría es obligatoria.")
-    @Column(name = "id_categoria")
-    private Integer idCategoria;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
 
     @Column(nullable = false, length = 100)
     @NotBlank(message = "La descripción no puede estar vacía.")

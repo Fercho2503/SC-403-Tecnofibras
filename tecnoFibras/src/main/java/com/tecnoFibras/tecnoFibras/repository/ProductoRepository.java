@@ -1,17 +1,14 @@
-import com.tiendaTech.tienda.domain.Producto;
+package com.tecnoFibras.tecnoFibras.repository;
+
+import com.tecnoFibras.tecnoFibras.domain.Producto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
-    
-    // Para mostrar solo los productos activos en la tienda
+
     List<Producto> findByActivoTrue();
-    
-    // Súper útil para filtrar el catálogo: Bañeras, Pilas o Bases de ducha
-    List<Producto> findByIdCategoria(Integer idCategoria);
-    
-    // Combina ambos filtros: productos activos de una categoría específica
-    List<Producto> findByIdCategoriaAndActivoTrue(Integer idCategoria);
+
+    List<Producto> findByCategoria_IdCategoria(Integer categoriaId);
 }

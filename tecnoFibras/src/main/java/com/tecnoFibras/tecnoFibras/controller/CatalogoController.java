@@ -24,6 +24,7 @@ public class CatalogoController {
     public String catalogo(Model model) {
         model.addAttribute("productos", productoService.getProductos());
         model.addAttribute("categorias", categoriaService.getCategorias());
+        model.addAttribute("categoriaSeleccionada", 0);
         return "catalogo/listado";
     }
 
@@ -31,6 +32,7 @@ public class CatalogoController {
     public String porCategoria(@PathVariable Integer id, Model model) {
         model.addAttribute("productos", productoService.getProductosByCategoria(id));
         model.addAttribute("categorias", categoriaService.getCategorias());
+        model.addAttribute("categoriaSeleccionada", id);
         return "catalogo/listado";
     }
 }

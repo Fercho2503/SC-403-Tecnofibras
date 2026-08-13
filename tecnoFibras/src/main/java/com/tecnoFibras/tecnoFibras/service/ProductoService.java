@@ -23,7 +23,7 @@ public class ProductoService {
 
     @Transactional(readOnly = true)
     public List<Producto> getProductosByCategoria(Integer categoriaId) {
-        return productoRepository.findByCategoriaId(categoriaId);
+        return productoRepository.findByCategoria_IdCategoria(categoriaId);
     }
 
     @Transactional(readOnly = true)
