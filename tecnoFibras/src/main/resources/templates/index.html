@@ -12,26 +12,26 @@
                 <h1 class="display-4 fw-bold">
                     TecnoFibras
                 </h1>
-                <p class="lead">Tu tienda especializada en Bañeras, Pilas y Bases de Ducha en fibra de vidrio</p>
+                <p class="lead">[[#{index.subtitulo}]]</p>
                 <a th:href="@{/catalogo}" class="btn btn-primary btn-lg me-2">
-                    <i class="fas fa-th"></i> Ver Catálogo
+                    <i class="fas fa-th"></i> [[#{index.verCatalogo}]]
                 </a>
                 <a th:href="@{/contacto}" class="btn btn-outline-light btn-lg">
-                    <i class="fas fa-envelope"></i> Contáctanos
+                    <i class="fas fa-envelope"></i> [[#{index.contactanos}]]
                 </a>
             </div>
         </div>
         <!-- Categorías -->
         <div class="container py-5">
-            <h2 class="text-center mb-4">Nuestras Categorías</h2>
+            <h2 class="text-center mb-4">[[#{index.nuestrasCategorias}]]</h2>
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="card text-center shadow-sm h-100">
                         <div class="card-body">
                             <i class="fas fa-bath fa-3x text-danger mb-3"></i>
-                            <h5 class="card-title">Bañeras y Tinas</h5>
-                            <p class="card-text text-muted">Modelos modernos y funcionales para tu hogar.</p>
-                            <a th:href="@{/catalogo(categoriaId=1)}" class="btn btn-outline-danger btn-sm">Ver productos</a>
+                            <h5 class="card-title">[[#{index.banerasTitulo}]]</h5>
+                            <p class="card-text text-muted">[[#{index.banerasDesc}]]</p>
+                            <a th:href="@{/catalogo/categoria/1}" class="btn btn-outline-danger btn-sm">[[#{index.verProductos}]]</a>
                         </div>
                     </div>
                 </div>
@@ -39,9 +39,9 @@
                     <div class="card text-center shadow-sm h-100">
                         <div class="card-body">
                             <i class="fas fa-tint fa-3x text-danger mb-3"></i>
-                            <h5 class="card-title">Pilas</h5>
-                            <p class="card-text text-muted">Pilas de fibra de vidrio de alta durabilidad.</p>
-                            <a th:href="@{/catalogo(categoriaId=2)}" class="btn btn-outline-danger btn-sm">Ver productos</a>
+                            <h5 class="card-title">[[#{index.pilasTitulo}]]</h5>
+                            <p class="card-text text-muted">[[#{index.pilasDesc}]]</p>
+                            <a th:href="@{/catalogo/categoria/2}" class="btn btn-outline-danger btn-sm">[[#{index.verProductos}]]</a>
                         </div>
                     </div>
                 </div>
@@ -49,9 +49,9 @@
                     <div class="card text-center shadow-sm h-100">
                         <div class="card-body">
                             <i class="fas fa-shower fa-3x text-danger mb-3"></i>
-                            <h5 class="card-title">Bases de Ducha</h5>
-                            <p class="card-text text-muted">Bases antideslizantes y resistentes.</p>
-                            <a th:href="@{/catalogo(categoriaId=3)}" class="btn btn-outline-danger btn-sm">Ver productos</a>
+                            <h5 class="card-title">[[#{index.duchaTitulo}]]</h5>
+                            <p class="card-text text-muted">[[#{index.duchaDesc}]]</p>
+                            <a th:href="@{/catalogo/categoria/3}" class="btn btn-outline-danger btn-sm">[[#{index.verProductos}]]</a>
                         </div>
                     </div>
                 </div>

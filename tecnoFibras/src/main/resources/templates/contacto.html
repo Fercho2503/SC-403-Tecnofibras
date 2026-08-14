@@ -13,28 +13,28 @@
                 <div class="col-md-8">
                     <div class="card shadow">
                         <div class="card-header bg-dark text-white">
-                            <h4><i class="fas fa-envelope"></i> Contacto</h4>
+                            <h4><i class="fas fa-envelope"></i> [[#{contacto.titulo}]]</h4>
                         </div>
                         <div class="card-body">
                             <form method="post" th:action="@{/contacto}">
                                 <div class="mb-3">
-                                    <label class="form-label">Nombre</label>
+                                    <label class="form-label" th:text="#{contacto.nombre}"></label>
                                     <input type="text" class="form-control"
-                                           placeholder="Escribe tu nombre completo acá" required/>
+                                           th:placeholder="#{contacto.nombrePlaceholder}" required/>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Correo electrónico</label>
+                                    <label class="form-label" th:text="#{contacto.correo}"></label>
                                     <input type="email" class="form-control"
                                            placeholder="correo@ejemplo.com" required/>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Mensaje</label>
+                                    <label class="form-label" th:text="#{contacto.mensaje}"></label>
                                     <textarea class="form-control" rows="4"
-                                              placeholder="Déjanos saber qué deseas." required></textarea>
+                                              th:placeholder="#{contacto.mensajePlaceholder}" required></textarea>
                                 </div>
                                 <div class="d-grid">
                                     <button type="submit" class="btn btn-dark">
-                                        <i class="fas fa-paper-plane"></i> Enviar mensaje
+                                        <i class="fas fa-paper-plane"></i> [[#{contacto.enviar}]]
                                     </button>
                                 </div>
                             </form>
@@ -43,17 +43,17 @@
 
                     <div class="card shadow mt-4">
                         <div class="card-header bg-dark text-white">
-                            <h4><i class="fas fa-map-marker-alt"></i> Información de contacto</h4>
+                            <h4><i class="fas fa-map-marker-alt"></i> [[#{contacto.infoTitulo}]]</h4>
                         </div>
                         <div class="card-body">
                             <p><i class="fas fa-map-marker-alt"></i>
-                                <strong> Dirección:</strong> Naranjo, Alajuela, Costa Rica</p>
+                                <strong>[[#{contacto.direccion}]]:</strong> Naranjo, Alajuela, Costa Rica</p>
                             <p><i class="fas fa-phone"></i>
-                                <strong> Teléfono:</strong> 2451-0000</p>
+                                <strong>[[#{contacto.telefono}]]:</strong> 2451-0000</p>
                             <p><i class="fas fa-envelope"></i>
-                                <strong> Correo:</strong> info@tecnofibrastfcr.com</p>
+                                <strong>[[#{contacto.correo}]]:</strong> info@tecnofibrastfcr.com</p>
                             <p><i class="fas fa-clock"></i>
-                                <strong> Horario:</strong> Lunes a Viernes 8:00 am - 5:00 pm</p>
+                                <strong>[[#{contacto.horario}]]:</strong> [[#{contacto.horarioValor}]]</p>
                         </div>
                     </div>
                 </div>
