@@ -19,6 +19,7 @@ public class HomeController {
     }
 
     @GetMapping("/acceso_denegado")
+    @PostMapping("/acceso_denegado")
     public String accesoDenegado() {
         return "denegado";
     }

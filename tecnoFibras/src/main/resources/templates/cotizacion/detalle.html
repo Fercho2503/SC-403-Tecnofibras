@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head}">
+        <title>TecnoFibras - Detalle de Cotización</title>
+    </head>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+
+        <div class="container py-4">
+            <a th:href="@{/cotizacion/listado}" class="btn btn-outline-secondary mb-3">
+                <i class="fas fa-arrow-left"></i> Volver al listado
+            </a>
+
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h4>Cotización #[[${cotizacion.idCotizacion}]]</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Cliente:</strong> [[${cotizacion.usuario.nombre}]] [[${cotizacion.usuario.apellidos}]] (
+                        [[${cotizacion.usuario.correo}]])</p>
+                    <p><strong>Fecha:</strong> [[${#temporals.format(cotizacion.fecha, 'dd/MM/yyyy HH:mm')}]]</p>
+                    <p><strong>Vendedor asignado:</strong>
+                        <span th:text="${cotizacion.vendedor != null} ? (${cotizacion.vendedor.nombre} + ' ' + ${cotizacion.vendedor.apellidos}) : 'Sin asignar (se te asigna al cambiar el estado)'"></span>
+                    </p>
+
+                    <form th:action="@{/cotizacion/actualizarEstado}" method="post" class="row g-2 align-items-end">
+                        <input type="hidden" name="idCotizacion" th:value="${cotizacion.idCotizacion}"/>
+                        <div class="col-auto">
+                            <label class="form-label mb-0">Estado</label>
+                            <select name="estado" class="form-select">
+                                <option value="Pendiente" th:selected="${cotizacion.estado == 'Pendiente'}">Pendiente</option>
+                                <option value="En Proceso" th:selected="${cotizacion.estado == 'En Proceso'}">En Proceso</option>
+                                <option value="Finalizada" th:selected="${cotizacion.estado == 'Finalizada'}">Finalizada</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-check"></i> Actualizar estado
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5>Productos solicitados</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio unitario</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="d : ${detalles}">
+                                <td th:text="${productosMap.get(d.idProducto) != null} ? ${productosMap.get(d.idProducto).descripcion} : ('Producto #' + ${d.idProducto})"></td>
+                                <td th:text="${productosMap.get(d.idProducto) != null} ? ('₡ ' + ${productosMap.get(d.idProducto).precio}) : '-'"></td>
+                                <td>[[${d.cantidad}]]</td>
+                                <td th:text="${productosMap.get(d.idProducto) != null} ? ('₡ ' + ${#numbers.formatDecimal(productosMap.get(d.idProducto).precio * d.cantidad, 1, 2)}) : '-'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <section th:replace="~{general/fragmentos :: mostrarToast}"/>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>

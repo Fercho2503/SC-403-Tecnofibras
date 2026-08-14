@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head}">
+        <title>TecnoFibras - Modificar Promoción</title>
+    </head>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+
+        <div class="container mt-4" style="max-width: 700px;">
+            <form th:action="@{/promocion/guardar}" th:object="${promocion}" method="post">
+                <input type="hidden" name="idPromocion" th:field="*{idPromocion}"/>
+
+                <div class="row py-3 mb-3 bg-light">
+                    <div class="col-md-6 d-grid">
+                        <a th:href="@{/promocion/listado}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Regresar
+                        </a>
+                    </div>
+                    <div class="col-md-6 d-grid">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h4>Editar Promoción</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <input type="text" name="descripcion" class="form-control" th:field="*{descripcion}" maxlength="200" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descuento (%)</label>
+                            <input type="number" step="0.01" min="0" max="100" name="descuento" class="form-control" th:field="*{descuento}" required/>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="activo" class="form-check-input" th:field="*{activo}"/>
+                            <label class="form-check-label">Activo</label>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Productos incluidos en la promoción</label>
+                            <div class="border rounded p-2" style="max-height: 250px; overflow-y: auto;">
+                                <div class="form-check" th:each="prod : ${productos}">
+                                    <input type="checkbox" class="form-check-input"
+                                           name="productosIds" th:value="${prod.idProducto}"
+                                           th:id="'prod_edit_' + ${prod.idProducto}"
+                                           th:checked="${productosSeleccionados.contains(prod.idProducto)}"/>
+                                    <label class="form-check-label" th:for="'prod_edit_' + ${prod.idProducto}">
+                                        [[${prod.descripcion}]] (₡ [[${prod.precio}]])
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <section th:replace="~{general/fragmentos :: mostrarToast}"/>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>

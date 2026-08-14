@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head}">
+        <title>TecnoFibras - Mis Cotizaciones</title>
+    </head>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+
+        <div class="container py-4">
+            <h3><i class="fas fa-list"></i> Mis Cotizaciones</h3>
+
+            <div th:if="${cotizaciones != null and !cotizaciones.empty}">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Vendedor asignado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${cotizaciones}">
+                            <td>[[${c.idCotizacion}]]</td>
+                            <td th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td>
+                                <span class="badge"
+                                      th:classappend="${c.estado == 'Pendiente'} ? 'bg-warning text-dark' : (${c.estado == 'Finalizada'} ? 'bg-success' : 'bg-info text-dark')"
+                                      th:text="${c.estado}"></span>
+                            </td>
+                            <td th:text="${c.vendedor != null} ? ${c.vendedor.nombre + ' ' + c.vendedor.apellidos} : 'Sin asignar'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${cotizaciones == null or cotizaciones.empty}" class="text-center py-5">
+                <i class="fas fa-file-invoice fa-3x text-muted mb-3"></i>
+                <p class="text-muted">Todavía no has enviado ninguna cotización.</p>
+                <a th:href="@{/catalogo}" class="btn btn-danger">Ir al catálogo</a>
+            </div>
+        </div>
+
+        <section th:replace="~{general/fragmentos :: mostrarToast}"/>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>
