@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <head th:replace="~{general/fragmentos :: head}">
         <title>TecnoFibras - Detalle</title>
     </head>
@@ -31,6 +33,13 @@
                     <p class="fs-3 text-danger fw-bold" th:unless="${descuentos.containsKey(producto.idProducto)}">
                         ₡ [[${producto.precio}]]
                     </p>
+
+                    <form th:action="@{/cotizacion/agregar}" method="post" sec:authorize="hasRole('CLIENTE')" class="mb-3">
+                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}"/>
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fas fa-cart-plus"></i> Agregar a cotización
+                        </button>
+                    </form>
 
                     <ul class="list-group">
                         <li class="list-group-item" th:if="${producto.medidas != null}">

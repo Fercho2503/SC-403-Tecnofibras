@@ -45,6 +45,17 @@
                         <li class="nav-item" sec:authorize="hasRole('ADMINISTRADOR')">
                             <a class="nav-link" th:href="@{/promocion/listado}">Promociones</a>
                         </li>
+                        <li class="nav-item" sec:authorize="hasAnyRole('VENDEDOR','ADMINISTRADOR')">
+                            <a class="nav-link" th:href="@{/cotizacion/listado}">Cotizaciones</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
+                            <a class="nav-link" th:href="@{/cotizacion/carrito}">
+                                <i class="fas fa-file-invoice"></i> Mi Cotización
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
+                            <a class="nav-link" th:href="@{/cotizacion/mis}">Mis Cotizaciones</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/contacto}">Contacto</a>
                         </li>
@@ -53,6 +64,11 @@
                         <li class="nav-item" sec:authorize="!isAuthenticated()">
                             <a class="nav-link" th:href="@{/login}">
                                 <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="nav-link" th:href="@{/registro/nuevo}">
+                                <i class="fas fa-user-plus"></i> Regístrate
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="isAuthenticated()">
