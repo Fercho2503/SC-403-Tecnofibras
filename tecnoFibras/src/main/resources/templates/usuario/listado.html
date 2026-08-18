@@ -12,7 +12,8 @@
                 <div class="col">
                     <button type="button" class="btn btn-primary"
                             data-bs-toggle="modal" data-bs-target="#agregarUsuarioModal">
-                        <i class="fas fa-plus"></i> Agregar Usuario
+                        <i class="fas fa-plus"></i>
+                        <span th:text="#{usuario.agregar}">Agregar Usuario</span>
                     </button>
                 </div>
             </div>
@@ -23,45 +24,56 @@
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header bg-dark text-white">
-                            <h4>Listado de Usuarios</h4>
+                            <h4 th:text="#{usuario.listado}">Listado de Usuarios</h4>
                         </div>
+
                         <div class="card-body">
                             <div th:if="${usuarios != null and !usuarios.empty}">
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Usuario</th>
-                                            <th>Nombre completo</th>
-                                            <th>Correo</th>
-                                            <th>Rol</th>
-                                            <th>Activo</th>
+                                            <th th:text="#{usuario.usuario}">Usuario</th>
+                                            <th th:text="#{usuario.nombreCompleto}">Nombre completo</th>
+                                            <th th:text="#{usuario.correo}">Correo</th>
+                                            <th th:text="#{usuario.rol}">Rol</th>
+                                            <th th:text="#{usuario.activo}">Activo</th>
                                             <th></th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         <tr th:each="u : ${usuarios}">
                                             <td>[[${u.idUsuario}]]</td>
                                             <td>[[${u.username}]]</td>
                                             <td>[[${u.nombre}]] [[${u.apellidos}]]</td>
                                             <td>[[${u.correo}]]</td>
+
                                             <td>
                                                 <span class="badge bg-secondary">
                                                     [[${rolesPorUsuario.get(u.idUsuario)}]]
                                                 </span>
                                             </td>
-                                            <td th:text="${u.activo} ? 'Sí' : 'No'"></td>
+
+                                            <td th:text="${u.activo} ? #{usuario.si} : #{usuario.no}"></td>
+
                                             <td>
                                                 <a th:href="@{/usuario/modificar/}+${u.idUsuario}"
                                                    class="btn btn-warning btn-sm">
-                                                    <i class="fas fa-pencil-alt"></i> Editar
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                    <span th:text="#{general.editar}">Editar</span>
                                                 </a>
+
                                                 <form th:action="@{/usuario/eliminar}" method="post"
                                                       style="display:inline">
-                                                    <input type="hidden" name="id" th:value="${u.idUsuario}"/>
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('¿Eliminar este usuario?')">
-                                                        <i class="fas fa-trash"></i> Eliminar
+                                                    <input type="hidden" name="id"
+                                                           th:value="${u.idUsuario}"/>
+
+                                                    <button type="submit"
+                                                            class="btn btn-danger btn-sm"
+                                                            th:onclick="|return confirm('#{usuario.confirmarEliminar}')|">
+                                                        <i class="fas fa-trash"></i>
+                                                        <span th:text="#{general.eliminar}">Eliminar</span>
                                                     </button>
                                                 </form>
                                             </td>
@@ -69,16 +81,21 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div th:if="${usuarios == null or usuarios.empty}" class="text-center p-3">
-                                <span>No hay usuarios registrados.</span>
+
+                            <div th:if="${usuarios == null or usuarios.empty}"
+                                 class="text-center p-3">
+                                <span th:text="#{usuario.noUsuarios}">
+                                    No hay usuarios registrados.
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="card text-center bg-dark text-white">
                         <div class="card-body">
-                            <h5>Total Usuarios</h5>
+                            <h5 th:text="#{usuario.total}">Total Usuarios</h5>
                             <p class="display-6">[[${totalUsuarios}]]</p>
                         </div>
                     </div>
@@ -87,58 +104,152 @@
         </div>
 
         <!-- Modal Agregar -->
-        <div class="modal fade" id="agregarUsuarioModal" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="agregarUsuarioModal"
+             tabindex="-1" aria-hidden="true">
+
             <div class="modal-dialog">
                 <div class="modal-content">
+
                     <div class="modal-header bg-dark text-white">
-                        <h5 class="modal-title"><i class="fas fa-plus"></i> Agregar Usuario</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title">
+                            <i class="fas fa-plus"></i>
+                            <span th:text="#{usuario.agregar}">
+                                Agregar Usuario
+                            </span>
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"></button>
                     </div>
-                    <form th:action="@{/usuario/guardar}" th:object="${usuario}" method="post">
+
+                    <form th:action="@{/usuario/guardar}"
+                          th:object="${usuario}"
+                          method="post">
+
                         <div class="modal-body">
+
                             <div class="mb-3">
-                                <label class="form-label">Usuario</label>
-                                <input type="text" name="username" class="form-control" maxlength="30" required/>
+                                <label class="form-label"
+                                       th:text="#{usuario.usuario}">
+                                    Usuario
+                                </label>
+
+                                <input type="text"
+                                       name="username"
+                                       class="form-control"
+                                       maxlength="30"
+                                       required/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" name="password" class="form-control" maxlength="100" required/>
+                                <label class="form-label"
+                                       th:text="#{usuario.contrasena}">
+                                    Contraseña
+                                </label>
+
+                                <input type="password"
+                                       name="password"
+                                       class="form-control"
+                                       maxlength="100"
+                                       required/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" maxlength="30" required/>
+                                <label class="form-label"
+                                       th:text="#{usuario.nombre}">
+                                    Nombre
+                                </label>
+
+                                <input type="text"
+                                       name="nombre"
+                                       class="form-control"
+                                       maxlength="30"
+                                       required/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Apellidos</label>
-                                <input type="text" name="apellidos" class="form-control" maxlength="60" required/>
+                                <label class="form-label"
+                                       th:text="#{usuario.apellidos}">
+                                    Apellidos
+                                </label>
+
+                                <input type="text"
+                                       name="apellidos"
+                                       class="form-control"
+                                       maxlength="60"
+                                       required/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Correo</label>
-                                <input type="email" name="correo" class="form-control" maxlength="50"/>
+                                <label class="form-label"
+                                       th:text="#{usuario.correo}">
+                                    Correo
+                                </label>
+
+                                <input type="email"
+                                       name="correo"
+                                       class="form-control"
+                                       maxlength="50"/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Teléfono</label>
-                                <input type="text" name="telefono" class="form-control" maxlength="25"/>
+                                <label class="form-label"
+                                       th:text="#{usuario.telefono}">
+                                    Teléfono
+                                </label>
+
+                                <input type="text"
+                                       name="telefono"
+                                       class="form-control"
+                                       maxlength="25"/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Rol</label>
-                                <select name="nombreRol" class="form-select" required>
-                                    <option th:each="r : ${rolesDisponibles}" th:value="${r}" th:text="${r}"></option>
+                                <label class="form-label"
+                                       th:text="#{usuario.rol}">
+                                    Rol
+                                </label>
+
+                                <select name="nombreRol"
+                                        class="form-select"
+                                        required>
+                                    <option th:each="r : ${rolesDisponibles}"
+                                            th:value="${r}"
+                                            th:text="${r}">
+                                    </option>
                                 </select>
                             </div>
+
                             <div class="mb-3 form-check">
-                                <input type="checkbox" name="activo" class="form-check-input" checked/>
-                                <label class="form-check-label">Activo</label>
+                                <input type="checkbox"
+                                       name="activo"
+                                       class="form-check-input"
+                                       checked/>
+
+                                <label class="form-check-label"
+                                       th:text="#{usuario.activo}">
+                                    Activo
+                                </label>
                             </div>
+
                         </div>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                <i class="fas fa-times"></i> Cerrar
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i>
+                                <span th:text="#{boton.cerrar}">Cerrar</span>
                             </button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Guardar
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                <span th:text="#{boton.guardar}">Guardar</span>
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>

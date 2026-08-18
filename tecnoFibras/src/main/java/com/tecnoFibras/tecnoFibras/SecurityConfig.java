@@ -23,6 +23,9 @@ public class SecurityConfig {
         var rutas = rutaService.getRutas();
 
         http.authorizeHttpRequests(requests -> {
+            
+            requests.requestMatchers("/idioma").permitAll();
+            
             for (Ruta ruta : rutas) {
                 if (ruta.isRequiereRol()) {
                     String[] roles = ruta.getRolesRequeridos().split(",");

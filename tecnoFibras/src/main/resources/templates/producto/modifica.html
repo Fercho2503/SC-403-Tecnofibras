@@ -14,56 +14,136 @@
                 <div class="row py-3 mb-3 bg-light">
                     <div class="col-md-6 d-grid">
                         <a th:href="@{/producto/listado}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Regresar
+                            <i class="fas fa-arrow-left"></i>
+                            <span th:text="#{boton.regresar}">Regresar</span>
                         </a>
                     </div>
+
                     <div class="col-md-6 d-grid">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-check"></i> Guardar
+                            <i class="fas fa-check"></i>
+                            <span th:text="#{boton.guardar}">Guardar</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header bg-dark text-white">
-                        <h4>Editar Producto</h4>
+                        <h4 th:text="#{producto.editar}">Editar Producto</h4>
                     </div>
+
                     <div class="card-body">
+
                         <div class="mb-3">
-                            <label class="form-label">Categoría</label>
-                            <select name="categoria.idCategoria" class="form-select" required>
-                                <option th:each="c : ${categorias}" th:value="${c.idCategoria}" th:text="${c.descripcion}"
-                                        th:selected="${c.idCategoria == producto.categoria.idCategoria}"></option>
+                            <label class="form-label"
+                                   th:text="#{producto.categoria}">
+                                Categoría
+                            </label>
+
+                            <select name="categoria.idCategoria"
+                                    class="form-select"
+                                    required>
+                                <option th:each="c : ${categorias}"
+                                        th:value="${c.idCategoria}"
+                                        th:text="${c.descripcion}"
+                                        th:selected="${c.idCategoria == producto.categoria.idCategoria}">
+                                </option>
                             </select>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Descripción</label>
-                            <input type="text" name="descripcion" class="form-control" th:field="*{descripcion}" maxlength="100" required/>
+                            <label class="form-label"
+                                   th:text="#{producto.descripcion}">
+                                Descripción
+                            </label>
+
+                            <input type="text"
+                                   name="descripcion"
+                                   class="form-control"
+                                   th:field="*{descripcion}"
+                                   maxlength="100"
+                                   required/>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Medidas</label>
-                            <input type="text" name="medidas" class="form-control" th:field="*{medidas}" maxlength="70"/>
+                            <label class="form-label"
+                                   th:text="#{producto.medidas}">
+                                Medidas
+                            </label>
+
+                            <input type="text"
+                                   name="medidas"
+                                   class="form-control"
+                                   th:field="*{medidas}"
+                                   maxlength="70"/>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Galonaje</label>
-                            <input type="text" name="galonaje" class="form-control" th:field="*{galonaje}" maxlength="40"/>
+                            <label class="form-label"
+                                   th:text="#{producto.galonaje}">
+                                Galonaje
+                            </label>
+
+                            <input type="text"
+                                   name="galonaje"
+                                   class="form-control"
+                                   th:field="*{galonaje}"
+                                   maxlength="40"/>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Capacidad</label>
-                            <input type="text" name="capacidad" class="form-control" th:field="*{capacidad}" maxlength="70"/>
+                            <label class="form-label"
+                                   th:text="#{producto.capacidad}">
+                                Capacidad
+                            </label>
+
+                            <input type="text"
+                                   name="capacidad"
+                                   class="form-control"
+                                   th:field="*{capacidad}"
+                                   maxlength="70"/>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Precio</label>
-                            <input type="number" step="0.01" min="0" name="precio" class="form-control" th:field="*{precio}" required/>
+                            <label class="form-label"
+                                   th:text="#{producto.precio}">
+                                Precio
+                            </label>
+
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   name="precio"
+                                   class="form-control"
+                                   th:field="*{precio}"
+                                   required/>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Ruta de imagen</label>
-                            <input type="text" name="rutaImagen" class="form-control" th:field="*{rutaImagen}" maxlength="1024"/>
+                            <label class="form-label"
+                                   th:text="#{producto.rutaImagen}">
+                                Ruta de imagen
+                            </label>
+
+                            <input type="text"
+                                   name="rutaImagen"
+                                   class="form-control"
+                                   th:field="*{rutaImagen}"
+                                   maxlength="1024"/>
                         </div>
+
                         <div class="mb-3 form-check">
-                            <input type="checkbox" name="activo" class="form-check-input" th:field="*{activo}"/>
-                            <label class="form-check-label">Activo</label>
+                            <input type="checkbox"
+                                   name="activo"
+                                   class="form-check-input"
+                                   th:field="*{activo}"/>
+
+                            <label class="form-check-label"
+                                   th:text="#{producto.activo}">
+                                Activo
+                            </label>
                         </div>
+
                     </div>
                 </div>
             </form>

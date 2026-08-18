@@ -4,53 +4,91 @@
     <head th:replace="~{general/fragmentos :: head}">
         <title>TecnoFibras - Editar Categoría</title>
     </head>
+
     <body>
         <header th:replace="~{general/fragmentos :: header}"/>
 
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-2"></div>
+
                 <div class="col-md-8">
-                    <form method="post" th:action="@{/categoria/guardar}"
-                          th:object="${categoria}" class="was-validated">
-                        <input type="hidden" name="id" th:field="*{id}"/>
+
+                    <form method="post"
+                          th:action="@{/categoria/guardar}"
+                          th:object="${categoria}"
+                          class="was-validated">
+
+                        <!-- ID REAL DE LA CATEGORÍA -->
+                        <input type="hidden"
+                               th:field="*{idCategoria}"/>
 
                         <div class="row py-4 mb-4 bg-light">
+
                             <div class="col-md-4 d-grid">
-                                <a th:href="@{/categoria/listado}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left"></i> Regresar
+                                <a th:href="@{/categoria/listado}"
+                                   class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left"></i>
+                                    <span th:text="#{boton.regresar}">Regresar</span>
                                 </a>
                             </div>
+
                             <div class="col-md-4 d-grid">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-check"></i> Guardar
+                                <button type="submit"
+                                        class="btn btn-success">
+                                    <i class="fas fa-check"></i>
+                                    <span th:text="#{boton.guardar}">Guardar</span>
                                 </button>
                             </div>
+
                         </div>
 
                         <div class="card">
+
                             <div class="card-header bg-dark text-white">
-                                <h4>Editar Categoría</h4>
+                                <h4 th:text="#{categoria.editar}">
+                                    Editar Categoría
+                                </h4>
                             </div>
+
                             <div class="card-body">
+
+                                <!-- DESCRIPCIÓN REAL -->
                                 <div class="mb-3">
-                                    <label class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre"
-                                           th:field="*{nombre}" required/>
+                                    <label class="form-label"
+                                           th:text="#{categoria.descripcion}">
+                                        Descripción
+                                    </label>
+
+                                    <input type="text"
+                                           class="form-control"
+                                           th:field="*{descripcion}"
+                                           required/>
                                 </div>
+
+                                <!-- ACTIVO -->
                                 <div class="mb-3">
-                                    <label class="form-label">Activo</label>
-                                    <input type="checkbox" class="form-check-input"
-                                           name="activo" th:field="*{activo}"/>
+                                    <label class="form-label"
+                                           th:text="#{categoria.activo}">
+                                        Activo
+                                    </label>
+
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           th:field="*{activo}"/>
                                 </div>
+
                             </div>
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>
 
         <section th:replace="~{general/fragmentos :: mostrarToast}"/>
+
         <footer th:replace="~{general/fragmentos :: footer}"/>
     </body>
 </html>

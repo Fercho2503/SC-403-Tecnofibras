@@ -7,43 +7,61 @@
         <header th:replace="~{general/fragmentos :: header}"/>
 
         <div class="container py-4">
-            <h3><i class="fas fa-file-invoice"></i> Mi Cotización</h3>
+            <h3>
+                <i class="fas fa-file-invoice"></i>
+                <span th:text="#{cotizacion.miCotizacion.titulo}"></span>
+            </h3>
 
             <div th:if="${carritoItems == null or carritoItems.empty}" class="text-center py-5">
                 <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
-                <p class="text-muted">Todavía no has agregado productos a tu cotización.</p>
-                <a th:href="@{/catalogo}" class="btn btn-danger"><i class="fas fa-th"></i> Ir al catálogo</a>
+                <p class="text-muted" th:text="#{cotizacion.miCotizacion.vacia}"></p>
+                <a th:href="@{/catalogo}" class="btn btn-danger">
+                    <i class="fas fa-th"></i>
+                    <span th:text="#{cotizacion.irCatalogo}"></span>
+                </a>
             </div>
 
             <div th:if="${carritoItems != null and !carritoItems.empty}">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Producto</th>
-                            <th>Precio unitario</th>
-                            <th>Cantidad</th>
+                            <th th:text="#{cotizacion.producto}"></th>
+                            <th th:text="#{cotizacion.precioUnitario}"></th>
+                            <th th:text="#{cotizacion.cantidad}"></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="item : ${carritoItems}">
                             <td>[[${item.producto.descripcion}]]</td>
+
                             <td>₡ [[${item.producto.precio}]]</td>
+
                             <td>
-                                <form th:action="@{/cotizacion/actualizar}" method="post" class="d-inline-flex align-items-center">
-                                    <input type="hidden" name="idProducto" th:value="${item.producto.idProducto}"/>
-                                    <input type="number" name="cantidad" th:value="${item.cantidad}" min="1"
-                                           class="form-control form-control-sm" style="width: 80px;"/>
-                                    <button type="submit" class="btn btn-sm btn-outline-primary ms-2">
+                                <form th:action="@{/cotizacion/actualizar}" method="post"
+                                      class="d-inline-flex align-items-center">
+                                    <input type="hidden" name="idProducto"
+                                           th:value="${item.producto.idProducto}"/>
+                                    <input type="number" name="cantidad"
+                                           th:value="${item.cantidad}" min="1"
+                                           class="form-control form-control-sm"
+                                           style="width: 80px;"/>
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-primary ms-2"
+                                            th:title="#{cotizacion.actualizar}">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </form>
                             </td>
+
                             <td>
                                 <form th:action="@{/cotizacion/eliminar}" method="post">
-                                    <input type="hidden" name="idProducto" th:value="${item.producto.idProducto}"/>
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('¿Quitar este producto?')">
+                                    <input type="hidden" name="idProducto"
+                                           th:value="${item.producto.idProducto}"/>
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger"
+                                            th:title="#{cotizacion.quitar}"
+                                            th:attr="onclick=|return confirm('#{cotizacion.confirmarQuitar}')|">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -54,11 +72,14 @@
 
                 <div class="d-flex justify-content-between mt-4">
                     <a th:href="@{/catalogo}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left"></i> Seguir viendo catálogo
+                        <i class="fas fa-arrow-left"></i>
+                        <span th:text="#{cotizacion.seguirCatalogo}"></span>
                     </a>
+
                     <form th:action="@{/cotizacion/enviar}" method="post">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-paper-plane"></i> Enviar Cotización
+                            <i class="fas fa-paper-plane"></i>
+                            <span th:text="#{cotizacion.enviar}"></span>
                         </button>
                     </form>
                 </div>

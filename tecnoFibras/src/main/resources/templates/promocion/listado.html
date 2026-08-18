@@ -12,7 +12,8 @@
                 <div class="col">
                     <button type="button" class="btn btn-primary"
                             data-bs-toggle="modal" data-bs-target="#agregarPromocionModal">
-                        <i class="fas fa-plus"></i> Agregar Promoción
+                        <i class="fas fa-plus"></i>
+                        <span th:text="#{promocion.agregar}">Agregar Promoción</span>
                     </button>
                 </div>
             </div>
@@ -23,7 +24,7 @@
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header bg-dark text-white">
-                            <h4>Listado de Promociones</h4>
+                            <h4 th:text="#{promocion.listado}">Listado de Promociones</h4>
                         </div>
                         <div class="card-body">
                             <div th:if="${promociones != null and !promociones.empty}">
@@ -31,10 +32,10 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Descripción</th>
-                                            <th>Descuento</th>
-                                            <th>Productos</th>
-                                            <th>Activo</th>
+                                            <th th:text="#{promocion.descripcion}">Descripción</th>
+                                            <th th:text="#{promocion.descuento}">Descuento</th>
+                                            <th th:text="#{promocion.productos}">Productos</th>
+                                            <th th:text="#{promocion.activo}">Activo</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -44,18 +45,22 @@
                                             <td>[[${p.descripcion}]]</td>
                                             <td>[[${p.descuento}]]%</td>
                                             <td>[[${p.productos.size()}]]</td>
-                                            <td th:text="${p.activo} ? 'Sí' : 'No'"></td>
+                                            <td th:text="${p.activo} ? #{general.si} : #{general.no}"></td>
                                             <td>
                                                 <a th:href="@{/promocion/modificar/}+${p.idPromocion}"
                                                    class="btn btn-warning btn-sm">
-                                                    <i class="fas fa-pencil-alt"></i> Editar
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                    <span th:text="#{promocion.editar}">Editar</span>
                                                 </a>
+
                                                 <form th:action="@{/promocion/eliminar}" method="post"
                                                       style="display:inline">
-                                                    <input type="hidden" name="id" th:value="${p.idPromocion}"/>
+                                                    <input type="hidden" name="id"
+                                                           th:value="${p.idPromocion}"/>
                                                     <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('¿Eliminar esta promoción?')">
-                                                        <i class="fas fa-trash"></i> Eliminar
+                                                            th:onclick="'return confirm(\'' + #{promocion.confirmarEliminar} + '\')'">
+                                                        <i class="fas fa-trash"></i>
+                                                        <span th:text="#{promocion.eliminar}">Eliminar</span>
                                                     </button>
                                                 </form>
                                             </td>
@@ -63,16 +68,21 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div th:if="${promociones == null or promociones.empty}" class="text-center p-3">
-                                <span>No hay promociones registradas.</span>
+
+                            <div th:if="${promociones == null or promociones.empty}"
+                                 class="text-center p-3">
+                                <span th:text="#{promocion.sinRegistros}">
+                                    No hay promociones registradas.
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="card text-center bg-dark text-white">
                         <div class="card-body">
-                            <h5>Total Promociones</h5>
+                            <h5 th:text="#{promocion.total}">Total Promociones</h5>
                             <p class="display-6">[[${totalPromociones}]]</p>
                         </div>
                     </div>
@@ -81,49 +91,105 @@
         </div>
 
         <!-- Modal Agregar -->
-        <div class="modal fade" id="agregarPromocionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="agregarPromocionModal"
+             tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
+
                     <div class="modal-header bg-dark text-white">
-                        <h5 class="modal-title"><i class="fas fa-plus"></i> Agregar Promoción</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title">
+                            <i class="fas fa-plus"></i>
+                            <span th:text="#{promocion.agregar}">
+                                Agregar Promoción
+                            </span>
+                        </h5>
+                        <button type="button" class="btn-close"
+                                data-bs-dismiss="modal"></button>
                     </div>
-                    <form th:action="@{/promocion/guardar}" th:object="${promocion}" method="post">
+
+                    <form th:action="@{/promocion/guardar}"
+                          th:object="${promocion}" method="post">
+
                         <div class="modal-body">
+
                             <div class="mb-3">
-                                <label class="form-label">Descripción</label>
-                                <input type="text" name="descripcion" class="form-control" maxlength="200" required/>
+                                <label class="form-label"
+                                       th:text="#{promocion.descripcion}">
+                                    Descripción
+                                </label>
+                                <input type="text" name="descripcion"
+                                       class="form-control"
+                                       maxlength="200" required/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Descuento (%)</label>
-                                <input type="number" step="0.01" min="0" max="100" name="descuento" class="form-control" required/>
+                                <label class="form-label"
+                                       th:text="#{promocion.descuentoPorcentaje}">
+                                    Descuento (%)
+                                </label>
+                                <input type="number" step="0.01"
+                                       min="0" max="100"
+                                       name="descuento"
+                                       class="form-control"
+                                       required/>
                             </div>
+
                             <div class="mb-3 form-check">
-                                <input type="checkbox" name="activo" class="form-check-input" checked/>
-                                <label class="form-check-label">Activo</label>
+                                <input type="checkbox" name="activo"
+                                       class="form-check-input" checked/>
+                                <label class="form-check-label"
+                                       th:text="#{promocion.activo}">
+                                    Activo
+                                </label>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Productos incluidos en la promoción</label>
-                                <div class="border rounded p-2" style="max-height: 250px; overflow-y: auto;">
-                                    <div class="form-check" th:each="prod : ${productos}">
-                                        <input type="checkbox" class="form-check-input"
-                                               name="productosIds" th:value="${prod.idProducto}"
+                                <label class="form-label"
+                                       th:text="#{promocion.productosIncluidos}">
+                                    Productos incluidos en la promoción
+                                </label>
+
+                                <div class="border rounded p-2"
+                                     style="max-height: 250px; overflow-y: auto;">
+
+                                    <div class="form-check"
+                                         th:each="prod : ${productos}">
+
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               name="productosIds"
+                                               th:value="${prod.idProducto}"
                                                th:id="'prod_add_' + ${prod.idProducto}"/>
-                                        <label class="form-check-label" th:for="'prod_add_' + ${prod.idProducto}">
+
+                                        <label class="form-check-label"
+                                               th:for="'prod_add_' + ${prod.idProducto}">
                                             [[${prod.descripcion}]] (₡ [[${prod.precio}]])
                                         </label>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                <i class="fas fa-times"></i> Cerrar
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i>
+                                <span th:text="#{promocion.cerrar}">
+                                    Cerrar
+                                </span>
                             </button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Guardar
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                <span th:text="#{promocion.guardar}">
+                                    Guardar
+                                </span>
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>

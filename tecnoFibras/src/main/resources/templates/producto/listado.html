@@ -12,7 +12,8 @@
                 <div class="col">
                     <button type="button" class="btn btn-primary"
                             data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
-                        <i class="fas fa-plus"></i> Agregar Producto
+                        <i class="fas fa-plus"></i>
+                        <span th:text="#{producto.agregar}">Agregar Producto</span>
                     </button>
                 </div>
             </div>
@@ -23,39 +24,58 @@
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header bg-dark text-white">
-                            <h4>Listado de Productos</h4>
+                            <h4 th:text="#{producto.listado}">Listado de Productos</h4>
                         </div>
+
                         <div class="card-body">
                             <div th:if="${productos != null and !productos.empty}">
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Descripción</th>
-                                            <th>Categoría</th>
-                                            <th>Precio</th>
-                                            <th>Activo</th>
+                                            <th th:text="#{producto.descripcion}">Descripción</th>
+                                            <th th:text="#{producto.categoria}">Categoría</th>
+                                            <th th:text="#{producto.precio}">Precio</th>
+                                            <th th:text="#{producto.activo}">Activo</th>
                                             <th></th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         <tr th:each="p : ${productos}">
                                             <td>[[${p.idProducto}]]</td>
+
+                                            <!-- Valor de la BD: NO traducir -->
                                             <td>[[${p.descripcion}]]</td>
+
+                                            <!-- Valor de la BD: NO traducir -->
                                             <td>[[${p.categoria.descripcion}]]</td>
+
+                                            <!-- Valor de la BD: NO traducir -->
                                             <td>₡ [[${p.precio}]]</td>
-                                            <td th:text="${p.activo} ? 'Sí' : 'No'"></td>
+
+                                            <td th:text="${p.activo} ? #{general.si} : #{general.no}">
+                                                Sí
+                                            </td>
+
                                             <td>
                                                 <a th:href="@{/producto/modificar/}+${p.idProducto}"
                                                    class="btn btn-warning btn-sm">
-                                                    <i class="fas fa-pencil-alt"></i> Editar
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                    <span th:text="#{boton.editar}">Editar</span>
                                                 </a>
+
                                                 <form th:action="@{/producto/eliminar}" method="post"
                                                       style="display:inline">
-                                                    <input type="hidden" name="id" th:value="${p.idProducto}"/>
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('¿Eliminar este producto?')">
-                                                        <i class="fas fa-trash"></i> Eliminar
+                                                    <input type="hidden"
+                                                           name="id"
+                                                           th:value="${p.idProducto}"/>
+
+                                                    <button type="submit"
+                                                            class="btn btn-danger btn-sm"
+                                                            th:onclick="'return confirm(\'' + #{producto.confirmarEliminar} + '\')'">
+                                                        <i class="fas fa-trash"></i>
+                                                        <span th:text="#{boton.eliminar}">Eliminar</span>
                                                     </button>
                                                 </form>
                                             </td>
@@ -63,16 +83,21 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div th:if="${productos == null or productos.empty}" class="text-center p-3">
-                                <span>No hay productos registrados.</span>
+
+                            <div th:if="${productos == null or productos.empty}"
+                                 class="text-center p-3">
+                                <span th:text="#{producto.sinRegistros}">
+                                    No hay productos registrados.
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="card text-center bg-dark text-white">
                         <div class="card-body">
-                            <h5>Total Productos</h5>
+                            <h5 th:text="#{producto.total}">Total Productos</h5>
                             <p class="display-6">[[${totalProductos}]]</p>
                         </div>
                     </div>
@@ -81,59 +106,155 @@
         </div>
 
         <!-- Modal Agregar -->
-        <div class="modal fade" id="agregarProductoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal fade"
+             id="agregarProductoModal"
+             tabindex="-1"
+             aria-hidden="true">
+
             <div class="modal-dialog">
                 <div class="modal-content">
+
                     <div class="modal-header bg-dark text-white">
-                        <h5 class="modal-title"><i class="fas fa-plus"></i> Agregar Producto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title">
+                            <i class="fas fa-plus"></i>
+                            <span th:text="#{producto.agregar}">Agregar Producto</span>
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+                        </button>
                     </div>
-                    <form th:action="@{/producto/guardar}" th:object="${producto}" method="post">
+
+                    <form th:action="@{/producto/guardar}"
+                          th:object="${producto}"
+                          method="post">
+
                         <div class="modal-body">
+
                             <div class="mb-3">
-                                <label class="form-label">Categoría</label>
-                                <select name="categoria.idCategoria" class="form-select" required>
-                                    <option th:each="c : ${categorias}" th:value="${c.idCategoria}" th:text="${c.descripcion}"></option>
+                                <label class="form-label"
+                                       th:text="#{producto.categoria}">
+                                    Categoría
+                                </label>
+
+                                <select name="categoria.idCategoria"
+                                        class="form-select"
+                                        required>
+                                    <option th:each="c : ${categorias}"
+                                            th:value="${c.idCategoria}"
+                                            th:text="${c.descripcion}">
+                                    </option>
                                 </select>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Descripción</label>
-                                <input type="text" name="descripcion" class="form-control" maxlength="100" required/>
+                                <label class="form-label"
+                                       th:text="#{producto.descripcion}">
+                                    Descripción
+                                </label>
+
+                                <input type="text"
+                                       name="descripcion"
+                                       class="form-control"
+                                       maxlength="100"
+                                       required/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Medidas</label>
-                                <input type="text" name="medidas" class="form-control" maxlength="70"/>
+                                <label class="form-label"
+                                       th:text="#{producto.medidas}">
+                                    Medidas
+                                </label>
+
+                                <input type="text"
+                                       name="medidas"
+                                       class="form-control"
+                                       maxlength="70"/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Galonaje</label>
-                                <input type="text" name="galonaje" class="form-control" maxlength="40"/>
+                                <label class="form-label"
+                                       th:text="#{producto.galonaje}">
+                                    Galonaje
+                                </label>
+
+                                <input type="text"
+                                       name="galonaje"
+                                       class="form-control"
+                                       maxlength="40"/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Capacidad</label>
-                                <input type="text" name="capacidad" class="form-control" maxlength="70"/>
+                                <label class="form-label"
+                                       th:text="#{producto.capacidad}">
+                                    Capacidad
+                                </label>
+
+                                <input type="text"
+                                       name="capacidad"
+                                       class="form-control"
+                                       maxlength="70"/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Precio</label>
-                                <input type="number" step="0.01" min="0" name="precio" class="form-control" required/>
+                                <label class="form-label"
+                                       th:text="#{producto.precio}">
+                                    Precio
+                                </label>
+
+                                <input type="number"
+                                       step="0.01"
+                                       min="0"
+                                       name="precio"
+                                       class="form-control"
+                                       required/>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Ruta de imagen</label>
-                                <input type="text" name="rutaImagen" class="form-control" maxlength="1024"
+                                <label class="form-label"
+                                       th:text="#{producto.rutaImagen}">
+                                    Ruta de imagen
+                                </label>
+
+                                <input type="text"
+                                       name="rutaImagen"
+                                       class="form-control"
+                                       maxlength="1024"
                                        placeholder="/img/productos/nombre.jpg"/>
                             </div>
+
                             <div class="mb-3 form-check">
-                                <input type="checkbox" name="activo" class="form-check-input" checked/>
-                                <label class="form-check-label">Activo</label>
+                                <input type="checkbox"
+                                       name="activo"
+                                       class="form-check-input"
+                                       checked/>
+
+                                <label class="form-check-label"
+                                       th:text="#{producto.activo}">
+                                    Activo
+                                </label>
                             </div>
+
                         </div>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                <i class="fas fa-times"></i> Cerrar
+
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i>
+                                <span th:text="#{boton.cerrar}">Cerrar</span>
                             </button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Guardar
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                <span th:text="#{boton.guardar}">Guardar</span>
                             </button>
+
                         </div>
+
                     </form>
                 </div>
             </div>

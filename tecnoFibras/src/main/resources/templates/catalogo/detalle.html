@@ -10,47 +10,81 @@
 
         <div class="container py-4">
             <a th:href="@{/catalogo}" class="btn btn-outline-danger mb-3">
-                <i class="fas fa-arrow-left"></i> Volver al catálogo
+                <i class="fas fa-arrow-left"></i>
+                <span th:text="#{detalle.volverCatalogo}"></span>
             </a>
+
             <div class="row">
                 <div class="col-md-5">
                     <img th:src="${producto.rutaImagen != null and !#strings.isEmpty(producto.rutaImagen)} ? ${producto.rutaImagen} : 'https://via.placeholder.com/500x400?text=Sin+imagen'"
-                         class="img-fluid rounded shadow-sm" alt="imagen producto"/>
+                         class="img-fluid rounded shadow-sm"
+                         alt="imagen producto"/>
                 </div>
+
                 <div class="col-md-7">
                     <h2>[[${producto.descripcion}]]</h2>
-                    <span class="badge bg-secondary mb-3">[[${producto.categoria.descripcion}]]</span>
+
+                    <span class="badge bg-secondary mb-3">
+                        [[${producto.categoria.descripcion}]]
+                    </span>
 
                     <div th:if="${descuentos.containsKey(producto.idProducto)}">
+
                         <span class="badge bg-danger fs-6 mb-2"
-                              th:text="'-' + ${descuentos.get(producto.idProducto)} + '% de descuento'"></span>
+                              th:text="#{detalle.descuento(${descuentos.get(producto.idProducto)})}">
+                        </span>
+
                         <p class="mb-0">
-                            <span class="text-decoration-line-through text-muted fs-5">₡ [[${producto.precio}]]</span>
+                            <span class="text-decoration-line-through text-muted fs-5">
+                                ₡ [[${producto.precio}]]
+                            </span>
                         </p>
+
                         <p class="fs-3 text-danger fw-bold"
-                           th:text="'₡ ' + ${#numbers.formatDecimal(producto.precio * (1 - descuentos.get(producto.idProducto) / 100), 1, 2)}"></p>
+                           th:text="'₡ ' + ${#numbers.formatDecimal(producto.precio * (1 - descuentos.get(producto.idProducto) / 100), 1, 2)}">
+                        </p>
                     </div>
-                    <p class="fs-3 text-danger fw-bold" th:unless="${descuentos.containsKey(producto.idProducto)}">
+
+                    <p class="fs-3 text-danger fw-bold"
+                       th:unless="${descuentos.containsKey(producto.idProducto)}">
                         ₡ [[${producto.precio}]]
                     </p>
 
-                    <form th:action="@{/cotizacion/agregar}" method="post" sec:authorize="hasRole('CLIENTE')" class="mb-3">
-                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}"/>
+                    <form th:action="@{/cotizacion/agregar}"
+                          method="post"
+                          sec:authorize="hasRole('CLIENTE')"
+                          class="mb-3">
+
+                        <input type="hidden"
+                               name="idProducto"
+                               th:value="${producto.idProducto}"/>
+
                         <button type="submit" class="btn btn-outline-danger">
-                            <i class="fas fa-cart-plus"></i> Agregar a cotización
+                            <i class="fas fa-cart-plus"></i>
+                            <span th:text="#{catalogo.agregarCotizacion}"></span>
                         </button>
                     </form>
 
                     <ul class="list-group">
-                        <li class="list-group-item" th:if="${producto.medidas != null}">
-                            <strong>Medidas:</strong> [[${producto.medidas}]]
+
+                        <li class="list-group-item"
+                            th:if="${producto.medidas != null}">
+                            <strong th:text="#{detalle.medidas}"></strong>:
+                            [[${producto.medidas}]]
                         </li>
-                        <li class="list-group-item" th:if="${producto.galonaje != null}">
-                            <strong>Galonaje:</strong> [[${producto.galonaje}]]
+
+                        <li class="list-group-item"
+                            th:if="${producto.galonaje != null}">
+                            <strong th:text="#{detalle.galonaje}"></strong>:
+                            [[${producto.galonaje}]]
                         </li>
-                        <li class="list-group-item" th:if="${producto.capacidad != null}">
-                            <strong>Capacidad:</strong> [[${producto.capacidad}]]
+
+                        <li class="list-group-item"
+                            th:if="${producto.capacidad != null}">
+                            <strong th:text="#{detalle.capacidad}"></strong>:
+                            [[${producto.capacidad}]]
                         </li>
+
                     </ul>
                 </div>
             </div>
