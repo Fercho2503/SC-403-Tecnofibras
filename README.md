@@ -107,6 +107,21 @@ spring.jpa.hibernate.ddl-auto=update
 server.port=7070
 
 
+Credenciales
+
+Cliente:
+usuario: aarias
+contraseña: cliente123
+
+Vendedor:
+usuario: ymonge
+contraseña: vendedor123
+
+Administrador:
+usuario: admin01
+contraseña: admin123
+
+
 
 
 
